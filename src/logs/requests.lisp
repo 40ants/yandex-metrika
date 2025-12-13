@@ -95,24 +95,33 @@
                       (or string timestamp)
                       (or string timestamp)
                       (or string list))
-    hash-table)
+    (values boolean integer integer integer integer))
 
 (defun evaluate-request (source from-date to-date fields)
   "Evaluate possibility of creating a log request.
    SOURCE is either :visits or :hits.
    FROM-DATE and TO-DATE define the date range (can be timestamps or strings).
    FIELDS is a list of field names to retrieve.
-   Returns a hash-table with 'log_request_evaluation' data including
-   'possible' (boolean) and 'max_possible_day_quantity'."
+   Returns (VALUES possible
+                   max-possible-day-quantity
+                   expected-size
+                   log-request-sum-max-size
+                   log-request-sum-size)."
   (multiple-value-bind (from-ts to-ts) (validate-dates from-date to-date)
     (let ((fields-str (if (listp fields)
-                          (format nil "~{~A~^,~}" fields)
-                          fields)))
-      (api-get "/logrequests/evaluate"
-               :params `(("date1" . ,(format-date from-ts))
-                         ("date2" . ,(format-date to-ts))
-                         ("source" . ,(source-to-string source))
-                         ("fields" . ,fields-str))))))
+                        (format nil "~{~A~^,~}" fields)
+                        fields)))
+      (let* ((response (api-get "/logrequests/evaluate"
+                                :params `(("date1" . ,(format-date from-ts))
+                                          ("date2" . ,(format-date to-ts))
+                                          ("source" . ,(source-to-string source))
+                                          ("fields" . ,fields-str))))
+             (eval-data (gethash "log_request_evaluation" response)))
+        (values (gethash "possible" eval-data)
+                (gethash "max_possible_day_quantity" eval-data)
+                (gethash "expected_size" eval-data)
+                (gethash "log_request_sum_max_size" eval-data)
+                (gethash "log_request_sum_size" eval-data))))))
 
 
 (-> create-request (source-type
@@ -127,10 +136,11 @@
    FROM-DATE and TO-DATE define the date range (can be timestamps or strings).
    FIELDS is a list of field names to retrieve.
    Returns a hash-table with 'log_request' data including 'request_id'."
-  (multiple-value-bind (from-ts to-ts) (validate-dates from-date to-date)
+  (multiple-value-bind (from-ts to-ts)
+      (validate-dates from-date to-date)
     (let ((fields-str (if (listp fields)
-                          (format nil "~{~A~^,~}" fields)
-                          fields)))
+                        (format nil "~{~A~^,~}" fields)
+                        fields)))
       (api-post "/logrequests"
                 :params `(("date1" . ,(format-date from-ts))
                           ("date2" . ,(format-date to-ts))
