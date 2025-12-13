@@ -46,10 +46,25 @@
   (cl-interpol:enable-interpol-syntax))
 
 
+(defparameter +valid-sources+ '(:visits :hits)
+  "List of valid source types.")
+
 (deftype source-type ()
   "Valid source types for log requests."
-  '(member :visits :hits))
+  '(member :visits :hits :unknown))
 
+
+(defparameter +valid-attributions+
+  '(:first
+    :last
+    :lastsign
+    :last-yandex-direct-click
+    :cross-device-last-significant
+    :cross-device-first
+    :cross-device-last-yandex-direct-click
+    :cross-device-last
+    :automatic)
+  "List of valid attribution models.")
 
 (deftype attribution-type ()
   "Valid attribution models for log requests.
@@ -62,7 +77,30 @@
            :cross-device-first
            :cross-device-last-yandex-direct-click
            :cross-device-last
-           :automatic))
+           :automatic
+           :unknown))
+
+
+(defparameter +valid-statuses+
+  '(:created
+    :canceled
+    :processed
+    :cleaned-by-user
+    :cleaned-automatically-as-too-old
+    :processing-failed
+    :awaiting-retry)
+  "List of valid status values.")
+
+(deftype status-type ()
+  "Valid status values for log requests."
+  '(member :created
+           :canceled
+           :processed
+           :cleaned-by-user
+           :cleaned-automatically-as-too-old
+           :processing-failed
+           :awaiting-retry
+           :unknown))
 
 
 (-> source-to-string (source-type) string)
@@ -76,8 +114,13 @@
 
 (defun string-to-source (string)
   "Convert API string to source keyword."
-  (make-keyword (string-upcase
-                 (replace-all "_" "-" string))))
+  (let ((keyword (make-keyword (string-upcase
+                                (replace-all "_" "-" string)))))
+    (if (member keyword +valid-sources+)
+        keyword
+        (progn
+          (log:warn "Unknown value for source: ~A" string)
+          :unknown))))
 
 
 (-> attribution-to-string (attribution-type) string)
@@ -91,27 +134,26 @@
 
 (defun string-to-attribution (string)
   "Convert API string to attribution keyword."
-  (make-keyword (string-upcase
-                 (replace-all "_" "-" string))))
-
-
-(deftype status-type ()
-  "Valid status values for log requests."
-  '(member :created
-           :canceled
-           :processed
-           :cleaned-by-user
-           :cleaned-automatically-as-too-old
-           :processing-failed
-           :awaiting-retry))
+  (let ((keyword (make-keyword (string-upcase
+                                (replace-all "_" "-" string)))))
+    (if (member keyword +valid-attributions+)
+        keyword
+        (progn
+          (log:warn "Unknown value for attribution: ~A" string)
+          :unknown))))
 
 
 (-> string-to-status (string) status-type)
 
 (defun string-to-status (string)
   "Convert API string to status keyword."
-  (make-keyword (string-upcase
-                 (replace-all "_" "-" string))))
+  (let ((keyword (make-keyword (string-upcase
+                                (replace-all "_" "-" string)))))
+    (if (member keyword +valid-statuses+)
+        keyword
+        (progn
+          (log:warn "Unknown value for status: ~A" string)
+          :unknown))))
 
 
 (defclass log-request ()
