@@ -22,7 +22,21 @@
   (cl-interpol:enable-interpol-syntax))
 
 
-(-> evaluate-request (string
+(deftype source-type ()
+  "Valid source types for log requests."
+  '(member :visits :hits))
+
+
+(-> source-to-string (source-type) string)
+
+(defun source-to-string (source)
+  "Convert source keyword to API string."
+  (ecase source
+    (:visits "visits")
+    (:hits "hits")))
+
+
+(-> evaluate-request (source-type
                       (or string timestamp)
                       (or string timestamp)
                       (or string list))
@@ -30,7 +44,7 @@
 
 (defun evaluate-request (source date1 date2 fields)
   "Evaluate possibility of creating a log request.
-   SOURCE is either \"visits\" or \"hits\".
+   SOURCE is either :visits or :hits.
    DATE1 and DATE2 define the date range (can be timestamps or strings).
    FIELDS is a list of field names to retrieve.
    Returns a hash-table with 'log_request_evaluation' data including
@@ -41,14 +55,19 @@
     (api-get "/logrequests/evaluate"
              :params `(("date1" . ,(format-date date1))
                        ("date2" . ,(format-date date2))
-                       ("source" . ,source)
+                       ("source" . ,(source-to-string source))
                        ("fields" . ,fields-str)))))
 
 
-(-> create-request (string (or string timestamp) (or string timestamp) (or string list)) hash-table)
+(-> create-request (source-type
+                    (or string timestamp)
+                    (or string timestamp)
+                    (or string list))
+    hash-table)
+
 (defun create-request (source date1 date2 fields)
   "Create a new log request.
-   SOURCE is either \"visits\" or \"hits\".
+   SOURCE is either :visits or :hits.
    DATE1 and DATE2 define the date range (can be timestamps or strings).
    FIELDS is a list of field names to retrieve.
    Returns a hash-table with 'log_request' data including 'request_id'."
@@ -58,7 +77,7 @@
     (api-post "/logrequests"
               :params `(("date1" . ,(format-date date1))
                         ("date2" . ,(format-date date2))
-                        ("source" . ,source)
+                        ("source" . ,(source-to-string source))
                         ("fields" . ,fields-str)))))
 
 

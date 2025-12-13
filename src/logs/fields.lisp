@@ -2,10 +2,7 @@
   (:use #:cl)
   (:import-from #:serapeum
                 #:->)
-  (:export ;; Data source constants
-           #:+source-visits+
-           #:+source-hits+
-           ;; Common visits (sessions) fields
+  (:export ;; Common visits (sessions) fields
            #:+visits-basic-fields+
            #:+visits-traffic-fields+
            #:+visits-device-fields+
@@ -18,15 +15,6 @@
            ;; Field helpers
            #:make-fields-string))
 (in-package #:yandex-metrika/logs/fields)
-
-
-;;; Data source constants
-
-(defparameter +source-visits+ "visits"
-  "Source type for sessions/visits data.")
-
-(defparameter +source-hits+ "hits"
-  "Source type for hits/events data.")
 
 
 ;;; Common visits (sessions) fields - prefix ym:s:
