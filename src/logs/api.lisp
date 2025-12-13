@@ -71,7 +71,12 @@
 (-> parse-response (string) hash-table)
 (defun parse-response (response)
   "Parse JSON response body."
-  (yason:parse response :object-as :hash-table :object-key-fn #'identity))
+  (yason:parse response
+               :object-as :hash-table
+               :json-arrays-as-vectors t
+               :json-booleans-as-symbols t
+               :json-nulls-as-keyword nil
+               :object-key-fn #'identity))
 
 
 (-> handle-error-response (string integer) nil)

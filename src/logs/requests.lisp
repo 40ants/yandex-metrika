@@ -295,12 +295,14 @@
   (api-get #?"/logrequests/${request-id}"))
 
 
-(-> list-requests () hash-table)
+(-> list-requests () list)
 
 (defun list-requests ()
   "List all log requests for the current counter.
-   Returns a hash-table with 'requests' array."
-  (api-get "/logrequests"))
+   Returns a list of LOG-REQUEST objects."
+  (let* ((response (api-get "/logrequests"))
+         (requests (gethash "requests" response)))
+    (map 'list #'parse-log-request requests)))
 
 
 (-> clean-request (integer) hash-table)
