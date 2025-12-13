@@ -1,20 +1,18 @@
-(defpackage #:cl-yandex-metrika
+(uiop:define-package #:yandex-metrika/client
   (:use #:cl)
   (:import-from #:alexandria
                 #:assoc-value)
   (:import-from #:jonathan
                 #:to-json)
+  (:import-from #:yandex-metrika/vars
+                #:*counter*)
   (:export #:hit
            #:*counter*))
-(in-package cl-yandex-metrika)
+(in-package #:yandex-metrika/client)
 
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (cl-interpol:enable-interpol-syntax))
-
-
-(defvar *counter* nil
-  "Yandex Metrika's counter id.")
 
 
 (defun hit (url &key params user-id (timeout 1))
