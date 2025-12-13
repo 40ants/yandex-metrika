@@ -336,13 +336,15 @@
         (parse-log-request log-request-data)))))
 
 
-(-> get-request (integer) hash-table)
+(-> get-request (integer) log-request)
 
 (defun get-request (request-id)
   "Get information about a specific log request.
    REQUEST-ID is the ID of the log request.
-   Returns a hash-table with 'log_request' data including 'status' and 'parts'."
-  (api-get #?"/logrequests/${request-id}"))
+   Returns a LOG-REQUEST object."
+  (let* ((response (api-get #?"/logrequest/${request-id}"))
+         (log-request-data (gethash "log_request" response)))
+    (parse-log-request log-request-data)))
 
 
 (-> list-requests () list)
@@ -355,24 +357,37 @@
     (map 'list #'parse-log-request requests)))
 
 
-(-> clean-request (integer) hash-table)
+(-> clean-request (log-request) log-request)
 
-(defun clean-request (request-id)
-  "Delete (clean) a log request to free up quota.
-   REQUEST-ID is the ID of the log request to delete.
-   Returns a hash-table with 'log_request' data."
-  (api-post #?"/logrequests/${request-id}/clean"))
+(defun clean-request (request)
+  "Clean a log request to free up quota.
+   REQUEST is a LOG-REQUEST object.
+   Returns a new LOG-REQUEST object with updated status."
+  (let* ((request-id (log-request-id request))
+         (response (api-post #?"/logrequest/${request-id}/clean"))
+         (log-request-data (gethash "log_request" response)))
+    (parse-log-request log-request-data)))
 
 
-(-> request-status (integer) string)
+(-> cancel-request (log-request) log-request)
+
+(defun cancel-request (request)
+  "Cancel a log request.
+   REQUEST is a LOG-REQUEST object.
+   Returns a new LOG-REQUEST object with updated status."
+  (let* ((request-id (log-request-id request))
+         (response (api-post #?"/logrequest/${request-id}/cancel"))
+         (log-request-data (gethash "log_request" response)))
+    (parse-log-request log-request-data)))
+
+
+(-> request-status (integer) status-type)
 
 (defun request-status (request-id)
   "Get the status of a log request.
-   Returns one of: \"created\", \"processed\", \"canceled\", \"processing_failed\",
-   \"cleaned_by_user\", \"cleaned_automatically_as_too_old\"."
-  (let* ((response (get-request request-id))
-         (log-request (gethash "log_request" response)))
-    (gethash "status" log-request)))
+   Returns one of: :created, :processed, :canceled, :processing-failed,
+   :cleaned-by-user, :cleaned-automatically-as-too-old."
+  (log-request-status (get-request request-id)))
 
 
 (-> request-parts (integer) (or null list))
@@ -380,9 +395,4 @@
 (defun request-parts (request-id)
   "Get the list of parts for a processed log request.
    Returns a list of part numbers available for download, or NIL if not ready."
-  (let* ((response (get-request request-id))
-         (log-request (gethash "log_request" response))
-         (parts (gethash "parts" log-request)))
-    (when parts
-      (loop for part across parts
-            collect (gethash "part_number" part)))))
+  (log-request-parts (get-request request-id)))
