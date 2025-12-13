@@ -160,11 +160,11 @@
            :documentation "Data source: :visits or :hits.")
    (from-date :initarg :from-date
               :reader log-request-from-date
-              :type string
+              :type timestamp
               :documentation "Start date of the request period.")
    (to-date :initarg :to-date
             :reader log-request-to-date
-            :type string
+            :type timestamp
             :documentation "End date of the request period.")
    (fields :initarg :fields
            :reader log-request-fields
@@ -195,8 +195,8 @@
     (format stream "~A ~A ~A..~A ~A"
             (log-request-id obj)
             (log-request-source obj)
-            (log-request-from-date obj)
-            (log-request-to-date obj)
+            (format-date (log-request-from-date obj))
+            (format-date (log-request-to-date obj))
             (log-request-status obj))))
 
 
@@ -210,8 +210,8 @@
                    :request-id (gethash "request_id" data)
                    :counter-id (gethash "counter_id" data)
                    :source (string-to-source (gethash "source" data))
-                   :from-date (gethash "date1" data)
-                   :to-date (gethash "date2" data)
+                   :from-date (parse-timestring (gethash "date1" data))
+                   :to-date (parse-timestring (gethash "date2" data))
                    :fields (if (stringp fields-raw)
                                (uiop:split-string fields-raw :separator '(#\,))
                                (coerce fields-raw 'list))
