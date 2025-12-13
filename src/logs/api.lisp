@@ -35,13 +35,16 @@
                      (logs-api-error-message condition)))))
 
 
-(-> check-credentials () (values &optional))
+(-> check-credentials ()
+    (values &optional))
+
 (defun check-credentials ()
   "Check that required credentials are set."
   (unless *counter*
     (error "Please set yandex-metrika/vars:*counter* variable"))
   (unless *token*
-    (error "Please set yandex-metrika/vars:*token* variable")))
+    (error "Please set yandex-metrika/vars:*token* variable"))
+  (values))
 
 
 (-> make-auth-headers () list)
@@ -54,6 +57,15 @@
 (defun build-url (path)
   "Build full API URL for the given path."
   #?"${*api-base-url*}/${*counter*}${path}")
+
+
+(-> build-query-string (list) string)
+(defun build-query-string (params)
+  "Build a URL query string from an alist of parameters."
+  (format nil "~{~A=~A~^&~}"
+          (loop for (key . value) in params
+                collect key
+                collect (quri:url-encode (princ-to-string value)))))
 
 
 (-> parse-response (string) hash-table)
@@ -73,34 +85,43 @@
            :message (or message response))))
 
 
-(-> api-get (string &key (:params list)) hash-table)
+(-> api-get (string &key (:params list))
+    (values hash-table &optional))
+
 (defun api-get (path &key params)
   "Make GET request to Logs API.
    PATH is the API endpoint path (e.g., \"/logrequests\").
    PARAMS is an alist of query parameters."
   (check-credentials)
-  (let ((url (build-url path)))
+
+  (let* ((base-url (build-url path))
+         (url (if params
+                  #?"${base-url}?${(build-query-string params)}"
+                  base-url)))
     (multiple-value-bind (body status-code)
-        (dex:get url
-                 :headers (make-auth-headers)
-                 :parameters params)
+        (dex:get url :headers (make-auth-headers))
       (if (and (>= status-code 200) (< status-code 300))
           (parse-response body)
           (handle-error-response body status-code)))))
 
 
-(-> api-post (string &key (:params list) (:content t)) hash-table)
+(-> api-post (string &key (:params list) (:content t))
+    (values hash-table &optional))
+
 (defun api-post (path &key params content)
   "Make POST request to Logs API.
    PATH is the API endpoint path.
    PARAMS is an alist of query parameters.
    CONTENT is the request body (will be JSON-encoded if provided as hash-table)."
   (check-credentials)
-  (let ((url (build-url path)))
+
+  (let* ((base-url (build-url path))
+         (url (if params
+                  #?"${base-url}?${(build-query-string params)}"
+                  base-url)))
     (multiple-value-bind (body status-code)
         (dex:post url
                   :headers (make-auth-headers)
-                  :parameters params
                   :content content)
       (if (and (>= status-code 200) (< status-code 300))
           (parse-response body)

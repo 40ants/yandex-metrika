@@ -22,7 +22,12 @@
   (cl-interpol:enable-interpol-syntax))
 
 
-(-> evaluate-request (string (or string timestamp) (or string timestamp) (or string list)) hash-table)
+(-> evaluate-request (string
+                      (or string timestamp)
+                      (or string timestamp)
+                      (or string list))
+    hash-table)
+
 (defun evaluate-request (source date1 date2 fields)
   "Evaluate possibility of creating a log request.
    SOURCE is either \"visits\" or \"hits\".
@@ -31,8 +36,8 @@
    Returns a hash-table with 'log_request_evaluation' data including
    'possible' (boolean) and 'max_possible_day_quantity'."
   (let ((fields-str (if (listp fields)
-                        (format nil "~{~A~^,~}" fields)
-                        fields)))
+                      (format nil "~{~A~^,~}" fields)
+                      fields)))
     (api-get "/logrequests/evaluate"
              :params `(("date1" . ,(format-date date1))
                        ("date2" . ,(format-date date2))
