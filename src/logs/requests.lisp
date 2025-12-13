@@ -95,6 +95,25 @@
                  (replace-all "_" "-" string))))
 
 
+(deftype status-type ()
+  "Valid status values for log requests."
+  '(member :created
+           :canceled
+           :processed
+           :cleaned-by-user
+           :cleaned-automatically-as-too-old
+           :processing-failed
+           :awaiting-retry))
+
+
+(-> string-to-status (string) status-type)
+
+(defun string-to-status (string)
+  "Convert API string to status keyword."
+  (make-keyword (string-upcase
+                 (replace-all "_" "-" string))))
+
+
 (defclass log-request ()
   ((request-id :initarg :request-id
                :reader log-request-id
@@ -122,8 +141,8 @@
            :documentation "List of requested fields.")
    (status :initarg :status
            :reader log-request-status
-           :type string
-           :documentation "Request status: created, processed, canceled, etc.")
+           :type status-type
+           :documentation "Request status: :created, :processed, :canceled, etc.")
    (size :initarg :size
          :reader log-request-size
          :type integer
@@ -165,7 +184,7 @@
                    :fields (if (stringp fields-raw)
                                (uiop:split-string fields-raw :separator '(#\,))
                                (coerce fields-raw 'list))
-                   :status (gethash "status" data)
+                   :status (string-to-status (gethash "status" data))
                    :size (gethash "size" data)
                    :attribution (string-to-attribution (gethash "attribution" data))
                    :parts (when parts-raw
