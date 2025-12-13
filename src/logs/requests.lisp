@@ -13,6 +13,10 @@
                 #:api-get
                 #:api-post
                 #:format-date)
+  (:import-from #:alexandria
+                #:make-keyword)
+  (:import-from #:str
+                #:replace-all)
   (:export #:evaluate-request
            #:create-request
            #:get-request
@@ -22,7 +26,19 @@
            #:request-parts
            ;; Date utilities
            #:n-days-ago
-           #:yesterday))
+           #:yesterday
+           ;; Log request class
+           #:log-request
+           #:log-request-id
+           #:log-request-counter-id
+           #:log-request-source
+           #:log-request-from-date
+           #:log-request-to-date
+           #:log-request-fields
+           #:log-request-status
+           #:log-request-size
+           #:log-request-attribution
+           #:log-request-parts))
 (in-package #:yandex-metrika/logs/requests)
 
 
@@ -35,13 +51,126 @@
   '(member :visits :hits))
 
 
+(deftype attribution-type ()
+  "Valid attribution models for log requests.
+   See: https://yandex.ru/dev/metrika/ru/logs/openapi/createLogRequest"
+  '(member :first
+           :last
+           :lastsign
+           :last-yandex-direct-click
+           :cross-device-last-significant
+           :cross-device-first
+           :cross-device-last-yandex-direct-click
+           :cross-device-last
+           :automatic))
+
+
 (-> source-to-string (source-type) string)
 
 (defun source-to-string (source)
   "Convert source keyword to API string."
-  (ecase source
-    (:visits "visits")
-    (:hits "hits")))
+  (string-downcase (symbol-name source)))
+
+
+(-> string-to-source (string) source-type)
+
+(defun string-to-source (string)
+  "Convert API string to source keyword."
+  (make-keyword (string-upcase
+                 (replace-all "_" "-" string))))
+
+
+(-> attribution-to-string (attribution-type) string)
+
+(defun attribution-to-string (attribution)
+  "Convert attribution keyword to API string."
+  (replace-all "-" "_" (symbol-name attribution)))
+
+
+(-> string-to-attribution (string) attribution-type)
+
+(defun string-to-attribution (string)
+  "Convert API string to attribution keyword."
+  (make-keyword (string-upcase
+                 (replace-all "_" "-" string))))
+
+
+(defclass log-request ()
+  ((request-id :initarg :request-id
+               :reader log-request-id
+               :type integer
+               :documentation "Unique identifier of the log request.")
+   (counter-id :initarg :counter-id
+               :reader log-request-counter-id
+               :type integer
+               :documentation "Counter ID this request belongs to.")
+   (source :initarg :source
+           :reader log-request-source
+           :type source-type
+           :documentation "Data source: :visits or :hits.")
+   (from-date :initarg :from-date
+              :reader log-request-from-date
+              :type string
+              :documentation "Start date of the request period.")
+   (to-date :initarg :to-date
+            :reader log-request-to-date
+            :type string
+            :documentation "End date of the request period.")
+   (fields :initarg :fields
+           :reader log-request-fields
+           :type list
+           :documentation "List of requested fields.")
+   (status :initarg :status
+           :reader log-request-status
+           :type string
+           :documentation "Request status: created, processed, canceled, etc.")
+   (size :initarg :size
+         :reader log-request-size
+         :type integer
+         :documentation "Size of the prepared data in bytes.")
+   (attribution :initarg :attribution
+                :reader log-request-attribution
+                :type attribution-type
+                :documentation "Attribution model used.")
+   (parts :initarg :parts
+          :reader log-request-parts
+          :initform nil
+          :type list
+          :documentation "List of available parts for download."))
+  (:documentation "Represents a Yandex Metrika Logs API request."))
+
+
+(defmethod print-object ((obj log-request) stream)
+  (print-unreadable-object (obj stream :type t)
+    (format stream "~A ~A ~A..~A ~A"
+            (log-request-id obj)
+            (log-request-source obj)
+            (log-request-from-date obj)
+            (log-request-to-date obj)
+            (log-request-status obj))))
+
+
+(-> parse-log-request (hash-table) log-request)
+
+(defun parse-log-request (data)
+  "Parse a hash-table into a LOG-REQUEST object."
+  (let ((fields-raw (gethash "fields" data))
+        (parts-raw (gethash "parts" data)))
+    (make-instance 'log-request
+                   :request-id (gethash "request_id" data)
+                   :counter-id (gethash "counter_id" data)
+                   :source (string-to-source (gethash "source" data))
+                   :from-date (gethash "date1" data)
+                   :to-date (gethash "date2" data)
+                   :fields (if (stringp fields-raw)
+                               (uiop:split-string fields-raw :separator '(#\,))
+                               (coerce fields-raw 'list))
+                   :status (gethash "status" data)
+                   :size (gethash "size" data)
+                   :attribution (string-to-attribution (gethash "attribution" data))
+                   :parts (when parts-raw
+                            (loop for part across parts-raw
+                                  collect (gethash "part_number" part))))))
 
 
 (-> to-timestamp ((or string timestamp)) timestamp)
@@ -127,25 +256,34 @@
 (-> create-request (source-type
                     (or string timestamp)
                     (or string timestamp)
-                    (or string list))
-    hash-table)
+                    (or string list)
+                    &key (:attribution (or null attribution-type)))
+    log-request)
 
-(defun create-request (source from-date to-date fields)
+(defun create-request (source from-date to-date fields &key attribution)
   "Create a new log request.
    SOURCE is either :visits or :hits.
    FROM-DATE and TO-DATE define the date range (can be timestamps or strings).
    FIELDS is a list of field names to retrieve.
-   Returns a hash-table with 'log_request' data including 'request_id'."
+   ATTRIBUTION is the attribution model (optional), one of:
+     :first :last :lastsign :last-yandex-direct-click
+     :cross-device-last-significant :cross-device-first
+     :cross-device-last-yandex-direct-click :cross-device-last :automatic
+   Returns a LOG-REQUEST object."
   (multiple-value-bind (from-ts to-ts)
       (validate-dates from-date to-date)
-    (let ((fields-str (if (listp fields)
-                        (format nil "~{~A~^,~}" fields)
-                        fields)))
-      (api-post "/logrequests"
-                :params `(("date1" . ,(format-date from-ts))
-                          ("date2" . ,(format-date to-ts))
-                          ("source" . ,(source-to-string source))
-                          ("fields" . ,fields-str))))))
+    (let* ((fields-str (if (listp fields)
+                           (format nil "~{~A~^,~}" fields)
+                           fields))
+           (params `(("date1" . ,(format-date from-ts))
+                     ("date2" . ,(format-date to-ts))
+                     ("source" . ,(source-to-string source))
+                     ("fields" . ,fields-str))))
+      (when attribution
+        (push `("attribution" . ,(attribution-to-string attribution)) params))
+      (let* ((response (api-post "/logrequests" :params params))
+             (log-request-data (gethash "log_request" response)))
+        (parse-log-request log-request-data)))))
 
 
 (-> get-request (integer) hash-table)
