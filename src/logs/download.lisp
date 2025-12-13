@@ -9,8 +9,11 @@
                 #:*api-base-url*
                 #:logs-api-error)
   (:import-from #:yandex-metrika/logs/requests
-                #:request-status
-                #:request-parts)
+                #:log-request
+                #:log-request-id
+                #:log-request-status
+                #:log-request-parts
+                #:get-request)
   (:export #:download-part
            #:download-all-parts
            #:wait-for-request
@@ -32,16 +35,16 @@
 (-> build-download-url (integer integer) string)
 (defun build-download-url (request-id part-number)
   "Build URL for downloading a specific part."
-  #?"${*api-base-url*}/${*counter*}/logrequests/${request-id}/part/${part-number}/download")
+  #?"${*api-base-url*}/${*counter*}/logrequest/${request-id}/part/${part-number}/download")
 
 
-(-> download-part (integer integer) string)
-(defun download-part (request-id part-number)
+(-> download-part (log-request integer) string)
+(defun download-part (request part-number)
   "Download a specific part of a log request.
-   REQUEST-ID is the ID of the log request.
+   REQUEST is a LOG-REQUEST object.
    PART-NUMBER is the part number to download.
    Returns the raw TSV data as a string."
-  (let ((url (build-download-url request-id part-number)))
+  (let ((url (build-download-url (log-request-id request) part-number)))
     (multiple-value-bind (body status-code)
         (dex:get url :headers (make-auth-headers))
       (if (and (>= status-code 200) (< status-code 300))
@@ -51,34 +54,35 @@
                  :message body)))))
 
 
-(-> download-all-parts (integer) list)
-(defun download-all-parts (request-id)
+(-> download-all-parts (log-request) list)
+(defun download-all-parts (request)
   "Download all parts of a processed log request.
-   REQUEST-ID is the ID of the log request.
+   REQUEST is a LOG-REQUEST object.
    Returns a list of TSV data strings, one per part."
-  (let ((parts (request-parts request-id)))
+  (let ((parts (log-request-parts request)))
     (unless parts
-      (error "Request ~A has no parts available for download" request-id))
+      (error "Request ~A has no parts available for download"
+             (log-request-id request)))
     (loop for part-number in parts
-          collect (download-part request-id part-number))))
+          collect (download-part request part-number))))
 
 
-(-> wait-for-request (integer &key (:interval integer) (:timeout integer)) boolean)
-(defun wait-for-request (request-id &key (interval 10) (timeout 3600))
+(-> wait-for-request (log-request &key (:interval integer) (:timeout integer)) boolean)
+(defun wait-for-request (request &key (interval 10) (timeout 3600))
   "Wait for a log request to be processed.
-   REQUEST-ID is the ID of the log request.
+   REQUEST is a LOG-REQUEST object.
    INTERVAL is the polling interval in seconds (default 10).
    TIMEOUT is the maximum wait time in seconds (default 3600 = 1 hour).
    Returns T if the request is processed, NIL if timeout or failed."
-  (let ((start-time (get-universal-time)))
+  (let ((start-time (get-universal-time))
+        (request-id (log-request-id request)))
     (loop
-      (let ((status (request-status request-id)))
+      (let ((status (log-request-status (get-request request-id))))
         (cond
-          ((string= status "processed")
+          ((eq status :processed)
            (return t))
-          ((member status '("canceled" "processing_failed"
-                            "cleaned_by_user" "cleaned_automatically_as_too_old")
-                   :test #'string=)
+          ((member status '(:canceled :processing-failed
+                            :cleaned-by-user :cleaned-automatically-as-too-old))
            (return nil))
           ((> (- (get-universal-time) start-time) timeout)
            (return nil))
