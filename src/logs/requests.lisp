@@ -51,7 +51,8 @@
 
 (deftype source-type ()
   "Valid source types for log requests."
-  '(member :visits :hits :unknown))
+  `(member ,@+valid-sources+
+           :unknown))
 
 
 (defparameter +valid-attributions+
@@ -66,18 +67,11 @@
     :automatic)
   "List of valid attribution models.")
 
+
 (deftype attribution-type ()
   "Valid attribution models for log requests.
    See: https://yandex.ru/dev/metrika/ru/logs/openapi/createLogRequest"
-  '(member :first
-           :last
-           :lastsign
-           :last-yandex-direct-click
-           :cross-device-last-significant
-           :cross-device-first
-           :cross-device-last-yandex-direct-click
-           :cross-device-last
-           :automatic
+  `(member ,@+valid-attributions+
            :unknown))
 
 
@@ -91,15 +85,10 @@
     :awaiting-retry)
   "List of valid status values.")
 
+
 (deftype status-type ()
   "Valid status values for log requests."
-  '(member :created
-           :canceled
-           :processed
-           :cleaned-by-user
-           :cleaned-automatically-as-too-old
-           :processing-failed
-           :awaiting-retry
+  `(member ,@+valid-statuses+
            :unknown))
 
 
