@@ -22,8 +22,6 @@
            #:get-request
            #:list-requests
            #:clean-request
-           #:request-status
-           #:request-parts
            ;; Date utilities
            #:n-days-ago
            #:yesterday
@@ -382,20 +380,3 @@
          (response (api-post #?"/logrequest/${request-id}/cancel"))
          (log-request-data (gethash "log_request" response)))
     (parse-log-request log-request-data)))
-
-
-(-> request-status (integer) status-type)
-
-(defun request-status (request-id)
-  "Get the status of a log request.
-   Returns one of: :created, :processed, :canceled, :processing-failed,
-   :cleaned-by-user, :cleaned-automatically-as-too-old."
-  (log-request-status (get-request request-id)))
-
-
-(-> request-parts (integer) (or null list))
-
-(defun request-parts (request-id)
-  "Get the list of parts for a processed log request.
-   Returns a list of part numbers available for download, or NIL if not ready."
-  (log-request-parts (get-request request-id)))
