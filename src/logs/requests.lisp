@@ -336,13 +336,16 @@
         (parse-log-request log-request-data)))))
 
 
-(-> get-request (integer) log-request)
+(-> get-request ((or integer log-request)) log-request)
 
-(defun get-request (request-id)
+(defun get-request (request)
   "Get information about a specific log request.
-   REQUEST-ID is the ID of the log request.
-   Returns a LOG-REQUEST object."
-  (let* ((response (api-get #?"/logrequest/${request-id}"))
+   REQUEST is either the ID of the log request (integer) or a LOG-REQUEST object.
+   Returns a LOG-REQUEST object with refreshed data from the API."
+  (let* ((request-id (etypecase request
+                       (integer request)
+                       (log-request (log-request-id request))))
+         (response (api-get #?"/logrequest/${request-id}"))
          (log-request-data (gethash "log_request" response)))
     (parse-log-request log-request-data)))
 
