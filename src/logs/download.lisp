@@ -2,7 +2,8 @@
   (:use #:cl)
   (:import-from #:serapeum
                 #:->)
-  (:import-from #:lisp-stat)
+  (:import-from #:lisp-stat
+                #:string-to-keyword)
   (:import-from #:yandex-metrika/vars
                 #:*counter*
                 #:*token*)
@@ -16,9 +17,7 @@
                 #:log-request-parts
                 #:get-request)
   (:export #:download-part
-           #:download-all-parts
-           #:parse-tsv-line
-           #:parse-tsv))
+           #:download-all-parts))
 (in-package #:yandex-metrika/logs/download)
 
 
@@ -53,7 +52,10 @@
         ((and (>= status-code 200)
               (< status-code 300))
          (let ((fare-csv:*separator* #\Tab))
-           (lisp-stat:read-csv response)))
+           (lisp-stat:read-csv response
+                               :column-keys-or-function #'string-to-keyword
+                               :map-alist '(("" . nil)
+                                            ("NA" . nil)))))
         (t
          (error 'logs-api-error
                 :code status-code
