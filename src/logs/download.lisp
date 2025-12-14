@@ -2,6 +2,7 @@
   (:use #:cl)
   (:import-from #:serapeum
                 #:->)
+  (:import-from #:lisp-stat)
   (:import-from #:yandex-metrika/vars
                 #:*counter*
                 #:*token*)
@@ -38,23 +39,37 @@
   #?"${*api-base-url*}/${*counter*}/logrequest/${request-id}/part/${part-number}/download")
 
 
-(-> download-part (log-request integer) string)
+(-> download-part (log-request integer)
+    lisp-stat:data-frame)
+
 (defun download-part (request part-number)
   "Download a specific part of a log request.
    REQUEST is a LOG-REQUEST object.
    PART-NUMBER is the part number to download.
    Returns the raw TSV data as a string."
   (let ((url (build-download-url (log-request-id request) part-number)))
-    (multiple-value-bind (body status-code)
+    (multiple-value-bind (response status-code)
         (dex:get url :headers (make-auth-headers))
-      (if (and (>= status-code 200) (< status-code 300))
-          body
-          (error 'logs-api-error
-                 :code status-code
-                 :message body)))))
+      (cond
+        ((and (>= status-code 200)
+              (< status-code 300))
+         (let ((fare-csv:*separator* #\Tab))
+           (lisp-stat:read-csv response)))
+        (t
+         (error 'logs-api-error
+                :code status-code
+                :message response))))))
 
 
-(-> download-all-parts (log-request) list)
+(defun join-dataframes (df1 df2)
+  (lisp-stat:matrix-df
+   (lisp-stat:keys df1)
+   (lisp-stat:stack-rows df1 df2)))
+
+
+(-> download-all-parts (log-request)
+    lisp-stat:data-frame)
+
 (defun download-all-parts (request)
   "Download all parts of a processed log request.
    REQUEST is a LOG-REQUEST object.
@@ -63,8 +78,14 @@
     (unless parts
       (error "Request ~A has no parts available for download"
              (log-request-id request)))
-    (loop for part-number in parts
-          collect (download-part request part-number))))
+    (loop with result = nil
+          for part-number in parts
+          for new-df = (download-part request part-number)
+          do (setf result
+                   (if result
+                     (join-dataframes result new-df)
+                     new-df))
+          finally (return result))))
 
 
 (-> wait-for-request (log-request &key (:interval integer) (:timeout integer)) boolean)
@@ -89,34 +110,3 @@
           (t
            (sleep interval)))))))
 
-
-(-> parse-tsv-line (string) list)
-(defun parse-tsv-line (line)
-  "Parse a single TSV line into a list of values."
-  (let ((values nil)
-        (current (make-string-output-stream))
-        (len (length line)))
-    (loop for i from 0 below len
-          for char = (char line i)
-          do (if (char= char #\Tab)
-                 (progn
-                   (push (get-output-stream-string current) values)
-                   (setf current (make-string-output-stream)))
-                 (write-char char current)))
-    (push (get-output-stream-string current) values)
-    (nreverse values)))
-
-
-(-> parse-tsv (string &key (:header boolean)) (values list (or null list)))
-(defun parse-tsv (data &key (header t))
-  "Parse TSV data into a list of rows.
-   DATA is the raw TSV string.
-   If HEADER is T (default), the first row is returned separately as headers.
-   Returns (VALUES rows headers) where rows is a list of lists,
-   and headers is the first row if HEADER is T, or NIL otherwise."
-  (let* ((lines (remove-if (lambda (line) (string= line ""))
-                           (uiop:split-string data :separator '(#\Newline))))
-         (parsed-lines (mapcar #'parse-tsv-line lines)))
-    (if (and header parsed-lines)
-        (values (rest parsed-lines) (first parsed-lines))
-        (values parsed-lines nil))))

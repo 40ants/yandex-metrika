@@ -13,7 +13,9 @@
            #:+hits-page-fields+
            #:+hits-device-fields+
            ;; Field helpers
-           #:make-fields-string))
+           #:make-fields-string
+           #:+hits-utm-fields+
+           #:+hits-goal-fields+))
 (in-package #:yandex-metrika/logs/fields)
 
 
@@ -81,6 +83,7 @@
 
 
 ;;; Common hits (events) fields - prefix ym:pv:
+;;; From https://yandex.ru/dev/metrika/ru/logs/fields/hits
 
 (defparameter +hits-basic-fields+
   '("ym:pv:counterID"
@@ -95,13 +98,21 @@
 (defparameter +hits-page-fields+
   '("ym:pv:URL"
     "ym:pv:title"
-    "ym:pv:referer"
-    "ym:pv:URLPathLevel1"
-    "ym:pv:URLPathLevel2"
-    "ym:pv:URLPathLevel3"
-    "ym:pv:URLPathLevel4"
-    "ym:pv:URLPathLevel5")
+    "ym:pv:referer")
   "Page and URL related hits fields.")
+
+(defparameter +hits-utm-fields+
+  '("ym:pv:UTMCampaign"
+    "ym:pv:UTMContent"
+    "ym:pv:UTMMedium"
+    "ym:pv:UTMSource"
+    "ym:pv:UTMTerm")
+  "UTM related fields.")
+
+
+(defparameter +hits-goal-fields+
+  '("ym:pv:goalsID")
+  "Goal/conversion related hits fields.")
 
 
 (defparameter +hits-device-fields+
