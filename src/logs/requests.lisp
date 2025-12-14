@@ -22,6 +22,7 @@
            #:get-request
            #:list-requests
            #:clean-request
+           #:wait-for-request
            ;; Date utilities
            #:n-days-ago
            #:yesterday
@@ -380,3 +381,34 @@
          (response (api-post #?"/logrequest/${request-id}/cancel"))
          (log-request-data (gethash "log_request" response)))
     (parse-log-request log-request-data)))
+
+
+
+
+(-> wait-for-request (log-request &key (:interval integer) (:timeout integer))
+    (values boolean log-request &optional))
+
+(defun wait-for-request (request &key (interval 10) (timeout 3600))
+  "Wait for a log request to be processed.
+   REQUEST is a LOG-REQUEST object.
+   INTERVAL is the polling interval in seconds (default 10).
+   TIMEOUT is the maximum wait time in seconds (default 3600 = 1 hour).
+   Returns T if the request is processed, NIL if timeout or failed."
+  (let ((start-time (get-universal-time)))
+    (loop
+      (let* ((new-request (get-request request))
+             (status (log-request-status new-request)))
+        (cond
+          ((eq status :processed)
+           (return (values t
+                           new-request)))
+          ((member status '(:canceled :processing-failed
+                            :cleaned-by-user :cleaned-automatically-as-too-old))
+           (return (values nil
+                           new-request)))
+          ((> (- (get-universal-time) start-time) timeout)
+           (return (values nil
+                           new-request)))
+          (t
+           (sleep interval)))))))
+

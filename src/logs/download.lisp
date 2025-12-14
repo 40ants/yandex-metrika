@@ -17,7 +17,6 @@
                 #:get-request)
   (:export #:download-part
            #:download-all-parts
-           #:wait-for-request
            #:parse-tsv-line
            #:parse-tsv))
 (in-package #:yandex-metrika/logs/download)
@@ -86,27 +85,3 @@
                      (join-dataframes result new-df)
                      new-df))
           finally (return result))))
-
-
-(-> wait-for-request (log-request &key (:interval integer) (:timeout integer)) boolean)
-(defun wait-for-request (request &key (interval 10) (timeout 3600))
-  "Wait for a log request to be processed.
-   REQUEST is a LOG-REQUEST object.
-   INTERVAL is the polling interval in seconds (default 10).
-   TIMEOUT is the maximum wait time in seconds (default 3600 = 1 hour).
-   Returns T if the request is processed, NIL if timeout or failed."
-  (let ((start-time (get-universal-time))
-        (request-id (log-request-id request)))
-    (loop
-      (let ((status (log-request-status (get-request request-id))))
-        (cond
-          ((eq status :processed)
-           (return t))
-          ((member status '(:canceled :processing-failed
-                            :cleaned-by-user :cleaned-automatically-as-too-old))
-           (return nil))
-          ((> (- (get-universal-time) start-time) timeout)
-           (return nil))
-          (t
-           (sleep interval)))))))
-
