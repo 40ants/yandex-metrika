@@ -11,11 +11,14 @@
                 #:*api-base-url*
                 #:logs-api-error)
   (:import-from #:yandex-metrika/logs/requests
+                #:log-request-source
                 #:log-request
                 #:log-request-id
                 #:log-request-status
                 #:log-request-parts
                 #:get-request)
+  (:import-from #:alexandria
+                #:make-keyword)
   (:export #:download-part
            #:download-all-parts))
 (in-package #:yandex-metrika/logs/download)
@@ -37,6 +40,17 @@
   #?"${*api-base-url*}/${*counter*}/logrequest/${request-id}/part/${part-number}/download")
 
 
+(defun make-keyword-factory (prefix-to-remove)
+  (flet ((make-field-name (name)
+           (let* ((without-prefix (if (str:starts-with-p prefix-to-remove name)
+                                    (subseq name (length prefix-to-remove))
+                                    name))
+                  (as-param (str:param-case without-prefix)))
+             (make-keyword
+              (string-upcase as-param)))))
+    #'make-field-name))
+
+
 (-> download-part (log-request integer)
     lisp-stat:data-frame)
 
@@ -53,7 +67,10 @@
               (< status-code 300))
          (let ((fare-csv:*separator* #\Tab))
            (lisp-stat:read-csv response
-                               :column-keys-or-function #'string-to-keyword
+                               :column-keys-or-function (case (log-request-source request)
+                                                          (:hits (make-keyword-factory "ym:pv:"))
+                                                          (:visits (make-keyword-factory "ym:s:"))
+                                                          (t #'string-to-keyword))
                                :map-alist '(("" . nil)
                                             ("NA" . nil)))))
         (t
