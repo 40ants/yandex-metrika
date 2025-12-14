@@ -1,6 +1,7 @@
 (uiop:define-package #:yandex-metrika/logs/requests
   (:use #:cl)
   (:import-from #:serapeum
+                #:eval-always
                 #:->)
   (:import-from #:local-time
                 #:timestamp
@@ -41,12 +42,13 @@
 (in-package #:yandex-metrika/logs/requests)
 
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
+(eval-always
   (cl-interpol:enable-interpol-syntax))
 
 
-(defparameter +valid-sources+ '(:visits :hits)
-  "List of valid source types.")
+(eval-always
+  (defparameter +valid-sources+ '(:visits :hits)
+    "List of valid source types."))
 
 (deftype source-type ()
   "Valid source types for log requests."
@@ -54,17 +56,18 @@
            :unknown))
 
 
-(defparameter +valid-attributions+
-  '(:first
-    :last
-    :lastsign
-    :last-yandex-direct-click
-    :cross-device-last-significant
-    :cross-device-first
-    :cross-device-last-yandex-direct-click
-    :cross-device-last
-    :automatic)
-  "List of valid attribution models.")
+(eval-always
+  (defparameter +valid-attributions+
+    '(:first
+      :last
+      :lastsign
+      :last-yandex-direct-click
+      :cross-device-last-significant
+      :cross-device-first
+      :cross-device-last-yandex-direct-click
+      :cross-device-last
+      :automatic)
+    "List of valid attribution models."))
 
 
 (deftype attribution-type ()
@@ -74,15 +77,16 @@
            :unknown))
 
 
-(defparameter +valid-statuses+
-  '(:created
-    :canceled
-    :processed
-    :cleaned-by-user
-    :cleaned-automatically-as-too-old
-    :processing-failed
-    :awaiting-retry)
-  "List of valid status values.")
+(eval-always
+  (defparameter +valid-statuses+
+    '(:created
+      :canceled
+      :processed
+      :cleaned-by-user
+      :cleaned-automatically-as-too-old
+      :processing-failed
+      :awaiting-retry)
+    "List of valid status values."))
 
 
 (deftype status-type ()
