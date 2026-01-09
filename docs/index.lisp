@@ -85,4 +85,9 @@ TODO: Write a library description. Put some examples here.
 ")
 
 
-(defautodoc @api (:system "yandex-metrika"))
+(defautodoc @api (:system "yandex-metrika"
+                  :ignore-words ("POST"
+                                 "TSV"
+                                 "UTM"
+                                 "YYYY-MM-DD"
+                                 "ID")))
