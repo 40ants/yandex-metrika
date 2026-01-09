@@ -2,6 +2,9 @@
   (:use #:cl)
   (:import-from #:serapeum
                 #:->)
+  (:import-from #:dex)
+  (:import-from #:yason)
+  (:import-from #:cl-interpol)
   (:import-from #:yandex-metrika/vars
                 #:*counter*
                 #:*token*)
