@@ -10,7 +10,8 @@ library for metrika.yandex.ru"
   :class :40ants-asdf-system
   :defsystem-depends-on ("40ants-asdf-system")
   :pathname "src"
-  :depends-on ("yandex-metrika/client"
+  :depends-on ("log4cl-extras"
+               "yandex-metrika/client"
                "yandex-metrika/logs/api"
                "yandex-metrika/logs/requests"
                "yandex-metrika/logs/download"
