@@ -19,6 +19,8 @@
                 #:get-request)
   (:import-from #:alexandria
                 #:make-keyword)
+  (:import-from #:yandex-metrika/auth
+                #:with-auth-headers)
   (:export #:download-part
            #:download-all-parts))
 (in-package #:yandex-metrika/logs/download)
@@ -26,12 +28,6 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (cl-interpol:enable-interpol-syntax))
-
-
-(-> make-auth-headers () list)
-(defun make-auth-headers ()
-  "Create authorization headers for API requests."
-  `(("Authorization" . ,#?"OAuth ${*token*}")))
 
 
 (-> build-download-url (integer integer) string)
@@ -60,23 +56,24 @@
    PART-NUMBER is the part number to download.
    Returns the raw TSV data as a string."
   (let ((url (build-download-url (log-request-id request) part-number)))
-    (multiple-value-bind (response status-code)
-        (dex:get url :headers (make-auth-headers))
-      (cond
-        ((and (>= status-code 200)
-              (< status-code 300))
-         (let ((fare-csv:*separator* #\Tab))
-           (lisp-stat:read-csv response
-                               :column-keys-or-function (case (log-request-source request)
-                                                          (:hits (make-keyword-factory "ym:pv:"))
-                                                          (:visits (make-keyword-factory "ym:s:"))
-                                                          (t #'string-to-keyword))
-                               :map-alist '(("" . nil)
-                                            ("NA" . nil)))))
-        (t
-         (error 'logs-api-error
-                :code status-code
-                :message response))))))
+    (with-auth-headers (headers)
+        (multiple-value-bind (response status-code)
+            (dex:get url :headers headers)
+          (cond
+            ((and (>= status-code 200)
+                  (< status-code 300))
+             (let ((fare-csv:*separator* #\Tab))
+               (lisp-stat:read-csv response
+                                   :column-keys-or-function (case (log-request-source request)
+                                                              (:hits (make-keyword-factory "ym:pv:"))
+                                                              (:visits (make-keyword-factory "ym:s:"))
+                                                              (t #'string-to-keyword))
+                                   :map-alist '(("" . nil)
+                                                ("NA" . nil)))))
+            (t
+             (error 'logs-api-error
+                    :code status-code
+                    :message response)))))))
 
 
 (defun join-dataframes (df1 df2)

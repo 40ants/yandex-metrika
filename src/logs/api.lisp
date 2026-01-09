@@ -8,6 +8,8 @@
   (:import-from #:local-time
                 #:timestamp
                 #:format-timestring)
+  (:import-from #:yandex-metrika/auth
+                #:with-auth-headers)
   (:export #:*api-base-url*
            #:api-get
            #:api-post
@@ -33,24 +35,6 @@
              (format stream "Logs API error ~A: ~A"
                      (logs-api-error-code condition)
                      (logs-api-error-message condition)))))
-
-
-(-> check-credentials ()
-    (values &optional))
-
-(defun check-credentials ()
-  "Check that required credentials are set."
-  (unless *counter*
-    (error "Please set yandex-metrika/vars:*counter* variable"))
-  (unless *token*
-    (error "Please set yandex-metrika/vars:*token* variable"))
-  (values))
-
-
-(-> make-auth-headers () list)
-(defun make-auth-headers ()
-  "Create authorization headers for API requests."
-  `(("Authorization" . ,#?"OAuth ${*token*}")))
 
 
 (-> build-url (string) string)
@@ -97,17 +81,17 @@
   "Make GET request to Logs API.
    PATH is the API endpoint path (e.g., \"/logrequests\").
    PARAMS is an alist of query parameters."
-  (check-credentials)
 
   (let* ((base-url (build-url path))
          (url (if params
                   #?"${base-url}?${(build-query-string params)}"
                   base-url)))
-    (multiple-value-bind (body status-code)
-        (dex:get url :headers (make-auth-headers))
-      (if (and (>= status-code 200) (< status-code 300))
-          (parse-response body)
-          (handle-error-response body status-code)))))
+    (with-auth-headers (headers)
+      (multiple-value-bind (body status-code)
+          (dex:get url :headers headers)
+        (if (and (>= status-code 200) (< status-code 300))
+            (parse-response body)
+            (handle-error-response body status-code))))))
 
 
 (-> api-post (string &key (:params list) (:content t))
@@ -118,19 +102,19 @@
    PATH is the API endpoint path.
    PARAMS is an alist of query parameters.
    CONTENT is the request body (will be JSON-encoded if provided as hash-table)."
-  (check-credentials)
 
   (let* ((base-url (build-url path))
          (url (if params
                   #?"${base-url}?${(build-query-string params)}"
                   base-url)))
-    (multiple-value-bind (body status-code)
-        (dex:post url
-                  :headers (make-auth-headers)
-                  :content content)
-      (if (and (>= status-code 200) (< status-code 300))
-          (parse-response body)
-          (handle-error-response body status-code)))))
+    (with-auth-headers (headers)
+      (multiple-value-bind (body status-code)
+          (dex:post url
+            :headers headers
+            :content content)
+        (if (and (>= status-code 200) (< status-code 300))
+            (parse-response body)
+            (handle-error-response body status-code))))))
 
 
 (-> format-date ((or string timestamp)) string)
