@@ -6,6 +6,7 @@
                 #:to-json)
   (:import-from #:yandex-metrika/vars
                 #:*counter*)
+  (:import-from #:cl-interpol)
   (:export #:hit
            #:*counter*))
 (in-package #:yandex-metrika/client)
