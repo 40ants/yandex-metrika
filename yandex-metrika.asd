@@ -17,3 +17,6 @@ library for metrika.yandex.ru"
                "yandex-metrika/logs/download"
                "yandex-metrika/logs/fields")
   :in-order-to ((test-op (test-op "yandex-metrika-tests"))))
+
+
+(asdf:register-system-packages "dexador" '("DEX"))

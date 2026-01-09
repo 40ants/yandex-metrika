@@ -7,6 +7,7 @@
   (:import-from #:yandex-metrika/vars
                 #:*counter*)
   (:import-from #:cl-interpol)
+  (:import-from #:dex)
   (:export #:hit
            #:*counter*))
 (in-package #:yandex-metrika/client)
