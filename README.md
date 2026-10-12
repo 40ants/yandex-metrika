@@ -47,7 +47,7 @@ You can install this library from Quicklisp, but you want to receive updates qui
 
 <a id="x-28-23A-28-2821-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FCLIENT-22-29-20PACKAGE-29"></a>
 
-#### [package](d094) `yandex-metrika/client`
+#### [package](ec69) `yandex-metrika/client`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FCLIENT-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -55,7 +55,7 @@ You can install this library from Quicklisp, but you want to receive updates qui
 
 <a id="x-28YANDEX-METRIKA-2FCLIENT-3AHIT-20FUNCTION-29"></a>
 
-##### [function](d6a4) `yandex-metrika/client:hit` url &key params user-id (timeout 1)
+##### [function](1266) `yandex-metrika/client:hit` url &key params user-id (timeout 1)
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FCLIENT-3FVariables-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -63,7 +63,7 @@ You can install this library from Quicklisp, but you want to receive updates qui
 
 <a id="x-28YANDEX-METRIKA-2FVARS-3A-2ACOUNTER-2A-20-28VARIABLE-29-29"></a>
 
-##### [variable](25e9) `yandex-metrika/vars:*counter*` nil
+##### [variable](0634) `yandex-metrika/vars:*counter*` nil
 
 Yandex Metrika's counter id.
 
@@ -73,7 +73,7 @@ Yandex Metrika's counter id.
 
 <a id="x-28-23A-28-2823-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FLOGS-2FAPI-22-29-20PACKAGE-29"></a>
 
-#### [package](90ae) `yandex-metrika/logs/api`
+#### [package](efb4) `yandex-metrika/logs/api`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FLOGS-2FAPI-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -85,17 +85,17 @@ Yandex Metrika's counter id.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3ALOGS-API-ERROR-20CONDITION-29"></a>
 
-###### [condition](00b5) `yandex-metrika/logs/api:logs-api-error` (error)
+###### [condition](2dc7) `yandex-metrika/logs/api:logs-api-error` (error)
 
 **Readers**
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3ALOGS-API-ERROR-CODE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FAPI-3ALOGS-API-ERROR-29-29"></a>
 
-###### [reader](00b5) `yandex-metrika/logs/api:logs-api-error-code` (logs-api-error) (:code)
+###### [reader](2dc7) `yandex-metrika/logs/api:logs-api-error-code` (logs-api-error) (:code)
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3ALOGS-API-ERROR-MESSAGE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FAPI-3ALOGS-API-ERROR-29-29"></a>
 
-###### [reader](00b5) `yandex-metrika/logs/api:logs-api-error-message` (logs-api-error) (:message)
+###### [reader](2dc7) `yandex-metrika/logs/api:logs-api-error-message` (logs-api-error) (:message)
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FLOGS-2FAPI-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -103,7 +103,7 @@ Yandex Metrika's counter id.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3AAPI-GET-20FUNCTION-29"></a>
 
-##### [function](0d05) `yandex-metrika/logs/api:api-get` path &key params
+##### [function](1e29) `yandex-metrika/logs/api:api-get` path &key params
 
 Make `GET` request to Logs `API`.
 `PATH` is the `API` endpoint path (e.g., "/logrequests").
@@ -111,7 +111,7 @@ Make `GET` request to Logs `API`.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3AAPI-POST-20FUNCTION-29"></a>
 
-##### [function](7cbf) `yandex-metrika/logs/api:api-post` path &key params content
+##### [function](35fb) `yandex-metrika/logs/api:api-post` path &key params content
 
 Make `POST` request to Logs `API`.
 `PATH` is the `API` endpoint path.
@@ -120,7 +120,7 @@ Make `POST` request to Logs `API`.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3AFORMAT-DATE-20FUNCTION-29"></a>
 
-##### [function](64c2) `yandex-metrika/logs/api:format-date` date
+##### [function](ae08) `yandex-metrika/logs/api:format-date` date
 
 Format a date for the `API` (`YYYY-MM-DD` format).
 `DATE` can be a local-time:timestamp or a string.
@@ -131,7 +131,7 @@ Format a date for the `API` (`YYYY-MM-DD` format).
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FAPI-3A-2AAPI-BASE-URL-2A-20-28VARIABLE-29-29"></a>
 
-##### [variable](b65c) `yandex-metrika/logs/api:*api-base-url*` "https://api-metrica.yandex.net/management/v1/counter"
+##### [variable](2f8d) `yandex-metrika/logs/api:*api-base-url*` "https://api-metrica.yandex.net/management/v1/counter"
 
 Base `URL` for Yandex Metrika Management `API`.
 
@@ -141,7 +141,7 @@ Base `URL` for Yandex Metrika Management `API`.
 
 <a id="x-28-23A-28-2828-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FLOGS-2FDOWNLOAD-22-29-20PACKAGE-29"></a>
 
-#### [package](ee94) `yandex-metrika/logs/download`
+#### [package](d5ac) `yandex-metrika/logs/download`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FLOGS-2FDOWNLOAD-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -149,7 +149,7 @@ Base `URL` for Yandex Metrika Management `API`.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FDOWNLOAD-3ADOWNLOAD-ALL-PARTS-20FUNCTION-29"></a>
 
-##### [function](f414) `yandex-metrika/logs/download:download-all-parts` request
+##### [function](ab81) `yandex-metrika/logs/download:download-all-parts` request
 
 Download all parts of a processed log request.
 `REQUEST` is a [`log-request`][63c9] object.
@@ -157,7 +157,7 @@ Returns a list of `TSV` data strings, one per part.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FDOWNLOAD-3ADOWNLOAD-PART-20FUNCTION-29"></a>
 
-##### [function](9596) `yandex-metrika/logs/download:download-part` request part-number
+##### [function](6fea) `yandex-metrika/logs/download:download-part` request part-number
 
 Download a specific part of a log request.
 `REQUEST` is a [`log-request`][63c9] object.
@@ -170,7 +170,7 @@ Returns the raw `TSV` data as a string.
 
 <a id="x-28-23A-28-2826-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FLOGS-2FFIELDS-22-29-20PACKAGE-29"></a>
 
-#### [package](01f9) `yandex-metrika/logs/fields`
+#### [package](8372) `yandex-metrika/logs/fields`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FLOGS-2FFIELDS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -178,7 +178,7 @@ Returns the raw `TSV` data as a string.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3AMAKE-FIELDS-STRING-20FUNCTION-29"></a>
 
-##### [function](9d96) `yandex-metrika/logs/fields:make-fields-string` fields
+##### [function](f500) `yandex-metrika/logs/fields:make-fields-string` fields
 
 Convert a list of field names to a comma-separated string.
 `FIELDS` can be a list of strings or a single string.
@@ -190,61 +190,61 @@ Returns the fields as a comma-separated string suitable for `API` calls.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BHITS-BASIC-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](a894) `yandex-metrika/logs/fields:+hits-basic-fields+` ("ym:pv:counterID" "ym:pv:dateTime" "ym:pv:date" "ym:pv:watchID" "ym:pv:clientID" "ym:pv:counterUserIDHash")
+##### [variable](f305) `yandex-metrika/logs/fields:+hits-basic-fields+` ("ym:pv:counterID" "ym:pv:dateTime" "ym:pv:date" "ym:pv:watchID" "ym:pv:clientID" "ym:pv:counterUserIDHash")
 
 Basic hits fields for event identification.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BHITS-DEVICE-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](d8e1) `yandex-metrika/logs/fields:+hits-device-fields+` ("ym:pv:deviceCategory" "ym:pv:operatingSystem" "ym:pv:operatingSystemRoot" "ym:pv:browser" "ym:pv:browserMajorVersion" "ym:pv:browserMinorVersion" "ym:pv:screenWidth" "ym:pv:screenHeight")
+##### [variable](83a1) `yandex-metrika/logs/fields:+hits-device-fields+` ("ym:pv:deviceCategory" "ym:pv:operatingSystem" "ym:pv:operatingSystemRoot" "ym:pv:browser" "ym:pv:browserMajorVersion" "ym:pv:browserMinorVersion" "ym:pv:screenWidth" "ym:pv:screenHeight")
 
 Device and browser related hits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BHITS-GOAL-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](37c0) `yandex-metrika/logs/fields:+hits-goal-fields+` ("ym:pv:goalsID")
+##### [variable](813c) `yandex-metrika/logs/fields:+hits-goal-fields+` ("ym:pv:goalsID")
 
 Goal/conversion related hits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BHITS-PAGE-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](98aa) `yandex-metrika/logs/fields:+hits-page-fields+` ("ym:pv:URL" "ym:pv:title" "ym:pv:referer")
+##### [variable](3a23) `yandex-metrika/logs/fields:+hits-page-fields+` ("ym:pv:URL" "ym:pv:title" "ym:pv:referer")
 
 Page and `URL` related hits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BHITS-UTM-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](579d) `yandex-metrika/logs/fields:+hits-utm-fields+` ("ym:pv:UTMCampaign" "ym:pv:UTMContent" "ym:pv:UTMMedium" "ym:pv:UTMSource" "ym:pv:UTMTerm")
+##### [variable](d6b2) `yandex-metrika/logs/fields:+hits-utm-fields+` ("ym:pv:UTMCampaign" "ym:pv:UTMContent" "ym:pv:UTMMedium" "ym:pv:UTMSource" "ym:pv:UTMTerm")
 
 `UTM` related fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BVISITS-BASIC-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](42b3) `yandex-metrika/logs/fields:+visits-basic-fields+` ("ym:s:counterID" "ym:s:dateTime" "ym:s:date" "ym:s:visitID" "ym:s:clientID" "ym:s:watchIDs" "ym:s:isNewUser" "ym:s:startURL" "ym:s:pageViews" "ym:s:visitDuration")
+##### [variable](6d9e) `yandex-metrika/logs/fields:+visits-basic-fields+` ("ym:s:counterID" "ym:s:dateTime" "ym:s:date" "ym:s:visitID" "ym:s:clientID" "ym:s:watchIDs" "ym:s:isNewUser" "ym:s:startURL" "ym:s:pageViews" "ym:s:visitDuration")
 
 Basic visits fields for session identification and metrics.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BVISITS-DEVICE-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](f6b2) `yandex-metrika/logs/fields:+visits-device-fields+` ("ym:s:deviceCategory" "ym:s:mobilePhone" "ym:s:mobilePhoneModel" "ym:s:operatingSystem" "ym:s:operatingSystemRoot" "ym:s:browser" "ym:s:browserLanguage" "ym:s:screenWidth" "ym:s:screenHeight" "ym:s:screenColors")
+##### [variable](2bba) `yandex-metrika/logs/fields:+visits-device-fields+` ("ym:s:deviceCategory" "ym:s:mobilePhone" "ym:s:mobilePhoneModel" "ym:s:operatingSystem" "ym:s:operatingSystemRoot" "ym:s:browser" "ym:s:browserLanguage" "ym:s:screenWidth" "ym:s:screenHeight" "ym:s:screenColors")
 
 Device and browser related visits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BVISITS-GEO-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](e15b) `yandex-metrika/logs/fields:+visits-geo-fields+` ("ym:s:regionCountry" "ym:s:regionCity" "ym:s:regionCountryID" "ym:s:regionCityID" "ym:s:ipAddress")
+##### [variable](df2f) `yandex-metrika/logs/fields:+visits-geo-fields+` ("ym:s:regionCountry" "ym:s:regionCity" "ym:s:regionCountryID" "ym:s:regionCityID" "ym:s:ipAddress")
 
 Geographic related visits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BVISITS-GOAL-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](e9e4) `yandex-metrika/logs/fields:+visits-goal-fields+` ("ym:s:goalsID" "ym:s:goalsSerialNumber" "ym:s:goalsDateTime" "ym:s:goalsPrice" "ym:s:goalsOrder")
+##### [variable](ace2) `yandex-metrika/logs/fields:+visits-goal-fields+` ("ym:s:goalsID" "ym:s:goalsSerialNumber" "ym:s:goalsDateTime" "ym:s:goalsPrice" "ym:s:goalsOrder")
 
 Goal/conversion related visits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FFIELDS-3A-2BVISITS-TRAFFIC-FIELDS-2B-20-28VARIABLE-29-29"></a>
 
-##### [variable](7344) `yandex-metrika/logs/fields:+visits-traffic-fields+` ("ym:s:trafficSource" "ym:s:lastTrafficSource" "ym:s:referer" "ym:s:searchEngineRoot" "ym:s:searchEngine" "ym:s:searchPhrase" "ym:s:UTMCampaign" "ym:s:UTMContent" "ym:s:UTMMedium" "ym:s:UTMSource" "ym:s:UTMTerm")
+##### [variable](9b7f) `yandex-metrika/logs/fields:+visits-traffic-fields+` ("ym:s:trafficSource" "ym:s:lastTrafficSource" "ym:s:referer" "ym:s:searchEngineRoot" "ym:s:searchEngine" "ym:s:searchPhrase" "ym:s:UTMCampaign" "ym:s:UTMContent" "ym:s:UTMMedium" "ym:s:UTMSource" "ym:s:UTMTerm")
 
 Traffic source related visits fields.
 
@@ -254,7 +254,7 @@ Traffic source related visits fields.
 
 <a id="x-28-23A-28-2828-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FLOGS-2FREQUESTS-22-29-20PACKAGE-29"></a>
 
-#### [package](a3ff) `yandex-metrika/logs/requests`
+#### [package](5537) `yandex-metrika/logs/requests`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FLOGS-2FREQUESTS-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -266,7 +266,7 @@ Traffic source related visits fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-20CLASS-29"></a>
 
-###### [class](375a) `yandex-metrika/logs/requests:log-request` ()
+###### [class](a077) `yandex-metrika/logs/requests:log-request` ()
 
 Represents a Yandex Metrika Logs `API` request.
 
@@ -274,61 +274,61 @@ Represents a Yandex Metrika Logs `API` request.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-ATTRIBUTION-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](6aa4) `yandex-metrika/logs/requests:log-request-attribution` (log-request) (:attribution)
+###### [reader](557f) `yandex-metrika/logs/requests:log-request-attribution` (log-request) (:attribution)
 
 Attribution model used.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-COUNTER-ID-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](b87e) `yandex-metrika/logs/requests:log-request-counter-id` (log-request) (:counter-id)
+###### [reader](a5e1) `yandex-metrika/logs/requests:log-request-counter-id` (log-request) (:counter-id)
 
 Counter `ID` this request belongs to.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-FIELDS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](11c6) `yandex-metrika/logs/requests:log-request-fields` (log-request) (:fields)
+###### [reader](d6ae) `yandex-metrika/logs/requests:log-request-fields` (log-request) (:fields)
 
 List of requested fields.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-FROM-DATE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](59c1) `yandex-metrika/logs/requests:log-request-from-date` (log-request) (:from-date)
+###### [reader](6a62) `yandex-metrika/logs/requests:log-request-from-date` (log-request) (:from-date)
 
 Start date of the request period.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-ID-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](3fb2) `yandex-metrika/logs/requests:log-request-id` (log-request) (:request-id)
+###### [reader](647d) `yandex-metrika/logs/requests:log-request-id` (log-request) (:request-id)
 
 Unique identifier of the log request.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-PARTS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](23b5) `yandex-metrika/logs/requests:log-request-parts` (log-request) (:parts = nil)
+###### [reader](c079) `yandex-metrika/logs/requests:log-request-parts` (log-request) (:parts = nil)
 
 List of available parts for download.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-SIZE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](206d) `yandex-metrika/logs/requests:log-request-size` (log-request) (:size)
+###### [reader](7a1b) `yandex-metrika/logs/requests:log-request-size` (log-request) (:size)
 
 Size of the prepared data in bytes.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-SOURCE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](1614) `yandex-metrika/logs/requests:log-request-source` (log-request) (:source)
+###### [reader](ed2a) `yandex-metrika/logs/requests:log-request-source` (log-request) (:source)
 
 Data source: :visits or :hits.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-STATUS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](cbcc) `yandex-metrika/logs/requests:log-request-status` (log-request) (:status)
+###### [reader](c675) `yandex-metrika/logs/requests:log-request-status` (log-request) (:status)
 
 Request status: :created, :processed, :canceled, etc.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-TO-DATE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-29-29"></a>
 
-###### [reader](9bb9) `yandex-metrika/logs/requests:log-request-to-date` (log-request) (:to-date)
+###### [reader](0aad) `yandex-metrika/logs/requests:log-request-to-date` (log-request) (:to-date)
 
 End date of the request period.
 
@@ -338,7 +338,7 @@ End date of the request period.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ACLEAN-REQUEST-20FUNCTION-29"></a>
 
-##### [function](1613) `yandex-metrika/logs/requests:clean-request` request
+##### [function](5159) `yandex-metrika/logs/requests:clean-request` request
 
 Clean a log request to free up quota.
 `REQUEST` is a [`log-request`][63c9] object.
@@ -346,7 +346,7 @@ Returns a new [`log-request`][63c9] object with updated status.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ACREATE-REQUEST-20FUNCTION-29"></a>
 
-##### [function](8ee7) `yandex-metrika/logs/requests:create-request` source from-date to-date fields &key attribution
+##### [function](2035) `yandex-metrika/logs/requests:create-request` source from-date to-date fields &key attribution
 
 Create a new log request.
 `SOURCE` is either :visits or :hits.
@@ -360,7 +360,7 @@ Returns a [`log-request`][63c9] object.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3AEVALUATE-REQUEST-20FUNCTION-29"></a>
 
-##### [function](82d2) `yandex-metrika/logs/requests:evaluate-request` source from-date to-date fields
+##### [function](f7cb) `yandex-metrika/logs/requests:evaluate-request` source from-date to-date fields
 
 Evaluate possibility of creating a log request.
 `SOURCE` is either :visits or :hits.
@@ -374,7 +374,7 @@ Returns (`VALUES` possible
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3AGET-REQUEST-20FUNCTION-29"></a>
 
-##### [function](f919) `yandex-metrika/logs/requests:get-request` request
+##### [function](8ac2) `yandex-metrika/logs/requests:get-request` request
 
 Get information about a specific log request.
 `REQUEST` is either the `ID` of the log request (integer) or a [`log-request`][63c9] object.
@@ -382,21 +382,21 @@ Returns a [`log-request`][63c9] object with refreshed data from the `API`.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALIST-REQUESTS-20FUNCTION-29"></a>
 
-##### [function](2fbf) `yandex-metrika/logs/requests:list-requests`
+##### [function](2125) `yandex-metrika/logs/requests:list-requests`
 
 List all log requests for the current counter.
 Returns a list of [`log-request`][63c9] objects.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3AN-DAYS-AGO-20FUNCTION-29"></a>
 
-##### [function](af11) `yandex-metrika/logs/requests:n-days-ago` n
+##### [function](6f78) `yandex-metrika/logs/requests:n-days-ago` n
 
 Return a timestamp for N days ago from today.
 N must be a non-negative integer.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3AWAIT-FOR-REQUEST-20FUNCTION-29"></a>
 
-##### [function](09df) `yandex-metrika/logs/requests:wait-for-request` request &key (interval 10) (timeout 3600)
+##### [function](eb0c) `yandex-metrika/logs/requests:wait-for-request` request &key (interval 10) (timeout 3600)
 
 Wait for a log request to be processed.
 `REQUEST` is a [`log-request`][63c9] object.
@@ -406,7 +406,7 @@ Returns T if the request is processed, `NIL` if timeout or failed.
 
 <a id="x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3AYESTERDAY-20FUNCTION-29"></a>
 
-##### [function](b999) `yandex-metrika/logs/requests:yesterday`
+##### [function](25ac) `yandex-metrika/logs/requests:yesterday`
 
 Return a timestamp for yesterday.
 Useful as `TO-DATE` since today's data is incomplete.
@@ -417,7 +417,7 @@ Useful as `TO-DATE` since today's data is incomplete.
 
 <a id="x-28-23A-28-2819-29-20BASE-CHAR-20-2E-20-22YANDEX-METRIKA-2FVARS-22-29-20PACKAGE-29"></a>
 
-#### [package](af24) `yandex-metrika/vars`
+#### [package](a9de) `yandex-metrika/vars`
 
 <a id="x-28YANDEX-METRIKA-DOCS-2FINDEX-3A-3A-7C-40YANDEX-METRIKA-2FVARS-3FVariables-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -425,13 +425,13 @@ Useful as `TO-DATE` since today's data is incomplete.
 
 <a id="x-28YANDEX-METRIKA-2FVARS-3A-2ACOUNTER-2A-20-28VARIABLE-29-29"></a>
 
-##### [variable](25e9) `yandex-metrika/vars:*counter*` nil
+##### [variable](0634) `yandex-metrika/vars:*counter*` nil
 
 Yandex Metrika's counter id.
 
 <a id="x-28YANDEX-METRIKA-2FVARS-3A-2ATOKEN-2A-20-28VARIABLE-29-29"></a>
 
-##### [variable](6051) `yandex-metrika/vars:*token*` nil
+##### [variable](1873) `yandex-metrika/vars:*token*` nil
 
 Yandex Metrika's oauth token.
 
@@ -442,52 +442,52 @@ Use this link to get dev token https://oauth.yandex.ru/authorize?response_type=t
 [63c9]: https://40ants.com/yandex-metrika/#x-28YANDEX-METRIKA-2FLOGS-2FREQUESTS-3ALOG-REQUEST-20CLASS-29
 [957b]: https://github.com/40ants/yandex-metrika
 [edce]: https://github.com/40ants/yandex-metrika/actions
-[d094]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/client.lisp#L1
-[d6a4]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/client.lisp#L20
-[90ae]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L1
-[7cbf]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L103
-[64c2]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L124
-[b65c]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L30
-[00b5]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L34
-[0d05]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/api.lisp#L83
-[ee94]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/download.lisp#L1
-[9596]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/download.lisp#L53
-[f414]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/download.lisp#L88
-[01f9]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L1
-[579d]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L104
-[37c0]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L113
-[d8e1]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L118
-[9d96]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L133
-[42b3]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L24
-[7344]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L38
-[f6b2]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L53
-[e15b]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L67
-[e9e4]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L76
-[a894]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L88
-[98aa]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/fields.lisp#L98
-[a3ff]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L1
-[375a]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L151
-[3fb2]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L152
-[b87e]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L156
-[1614]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L160
-[59c1]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L164
-[9bb9]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L168
-[11c6]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L172
-[cbcc]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L176
-[206d]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L180
-[6aa4]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L184
-[23b5]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L188
-[af11]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L240
-[b999]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L248
-[82d2]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L282
-[8ee7]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L316
-[f919]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L344
-[2fbf]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L358
-[1613]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L368
-[09df]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/logs/requests.lisp#L395
-[af24]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/vars.lisp#L1
-[6051]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/vars.lisp#L12
-[25e9]: https://github.com/40ants/yandex-metrika/blob/b872966dd20a499c465478abcec9cc06bc79de7f/src/vars.lisp#L8
+[ec69]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/client.lisp#L1
+[1266]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/client.lisp#L20
+[efb4]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L1
+[35fb]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L103
+[ae08]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L124
+[2f8d]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L30
+[2dc7]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L34
+[1e29]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/api.lisp#L83
+[d5ac]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/download.lisp#L1
+[6fea]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/download.lisp#L53
+[ab81]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/download.lisp#L88
+[8372]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L1
+[d6b2]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L104
+[813c]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L113
+[83a1]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L118
+[f500]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L133
+[6d9e]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L24
+[9b7f]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L38
+[2bba]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L53
+[df2f]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L67
+[ace2]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L76
+[f305]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L88
+[3a23]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/fields.lisp#L98
+[5537]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L1
+[a077]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L151
+[647d]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L152
+[a5e1]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L156
+[ed2a]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L160
+[6a62]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L164
+[0aad]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L168
+[d6ae]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L172
+[c675]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L176
+[7a1b]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L180
+[557f]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L184
+[c079]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L188
+[6f78]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L240
+[25ac]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L248
+[f7cb]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L282
+[2035]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L316
+[8ac2]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L344
+[2125]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L358
+[5159]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L368
+[eb0c]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/logs/requests.lisp#L395
+[a9de]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/vars.lisp#L1
+[1873]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/vars.lisp#L12
+[0634]: https://github.com/40ants/yandex-metrika/blob/5674c6ddadf20dab98797eba8fd5cf5ae8c93460/src/vars.lisp#L8
 [5397]: https://github.com/40ants/yandex-metrika/issues
 [8236]: https://quickdocs.org/alexandria
 [f8a9]: https://quickdocs.org/cl-interpol
